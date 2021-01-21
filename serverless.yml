@@ -13,4 +13,12 @@ provider: # cloud 정보
 
 functions: # deploy 할 function 목록
   hello: # function 명
-    handler: handler.hello # function 파일 : 실행할 코드
+    handler: src/handlers/hello.handler # function 파일 : 실행할 코드 / {FILE_PATH}.{export valiable name}
+    events: # 트리거 사용을 위해 events 필요
+      - http:
+          method: GET
+          path: /hello
+
+custom: # 현재 서비스 전용 변수 설정
+  bundle:
+    linting: false # serverless-bundle plugins do not linting check
