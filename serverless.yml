@@ -1,0 +1,16 @@
+service:
+  name: sls-like # deployment name
+
+plugins:
+  - serverless-bundle # webpack과 연동해서 쓰려면 필요
+  - serverless-pseudo-parameters # aws 객체들을 쉽게 가져다 쓸 수 있도록
+
+provider: # cloud 정보
+  name: aws
+  runtime: nodejs12.x # larmda function 언어
+  memorySize: 256
+  stage: ${opt:stage, 'dev'} # serverless.yml 파일에서 사용할 수 있는 변수형태. default 값 설정가능. opt 은 option
+
+functions: # deploy 할 function 목록
+  hello: # function 명
+    handler: handler.hello # function 파일 : 실행할 코드
