@@ -7,9 +7,10 @@ plugins:
 
 provider: # cloud 정보
   name: aws
-  runtime: nodejs12.x # larmda function 언어
+  runtime: nodejs12.x # lamda function 언어
   memorySize: 256
   stage: ${opt:stage, 'dev'} # serverless.yml 파일에서 사용할 수 있는 변수형태. default 값 설정가능. opt 은 option
+  region: ap-northeast-2 # 서비스 배포할 리전 설정. multiple region 설정도 가능
 
 functions: # deploy 할 function 목록
   hello: # function 명
