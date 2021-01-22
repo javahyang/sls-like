@@ -19,6 +19,12 @@ functions: # deploy 할 function 목록
       - http:
           method: GET
           path: /hello
+  createLike:
+    handler: src/handlers/createLike.handler
+    events:
+      - http:
+          method: POST
+          path: /likes
 
 custom: # 현재 서비스 전용 변수 설정
   bundle:
