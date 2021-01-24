@@ -11,6 +11,12 @@ provider: # cloud 정보
   memorySize: 256
   stage: ${opt:stage, 'dev'} # serverless.yml 파일에서 사용할 수 있는 변수형태. default 값 설정가능. opt 은 option
   region: ap-northeast-2 # 서비스 배포할 리전 설정. multiple region 설정도 가능
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource:
+        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/LikesTable
 
 resources:
   Resources:
