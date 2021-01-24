@@ -12,25 +12,11 @@ provider: # cloud 정보
   stage: ${opt:stage, 'dev'} # serverless.yml 파일에서 사용할 수 있는 변수형태. default 값 설정가능. opt 은 option
   region: ap-northeast-2 # 서비스 배포할 리전 설정. multiple region 설정도 가능
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:PutItem
-      Resource:
-        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/LikesTable
+    - ${file(iam/LikesTableIAM.yml):LikesTableIAM}
 
 resources:
   Resources:
-    LikesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: LikesTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
+    LikesTable: ${file(resources/LikesTable.yml):LikesTable}
 
 functions: # deploy 할 function 목록
   hello: # function 명
