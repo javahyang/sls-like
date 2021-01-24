@@ -11,6 +11,8 @@ provider: # cloud 정보
   memorySize: 256
   stage: ${opt:stage, 'dev'} # serverless.yml 파일에서 사용할 수 있는 변수형태. default 값 설정가능. opt 은 option
   region: ap-northeast-2 # 서비스 배포할 리전 설정. multiple region 설정도 가능
+  environment:
+    LIKES_TABLE_NAME: ${self:custom.LikesTable.name}
   iamRoleStatements:
     - ${file(iam/LikesTableIAM.yml):LikesTableIAM}
 
@@ -18,13 +20,7 @@ resources:
   Resources:
     LikesTable: ${file(resources/LikesTable.yml):LikesTable}
 
-functions: # deploy 할 function 목록
-  hello: # function 명
-    handler: src/handlers/hello.handler # function 파일 : 실행할 코드 / {FILE_PATH}.{export valiable name}
-    events: # 트리거 사용을 위해 events 필요
-      - http:
-          method: GET
-          path: /hello
+functions:
   createLike:
     handler: src/handlers/createLike.handler
     events:
@@ -33,5 +29,8 @@ functions: # deploy 할 function 목록
           path: /likes
 
 custom: # 현재 서비스 전용 변수 설정
+  LikesTable:
+    name: !Ref LikesTable # javascript 파일에서 필요
+    arn: !GetAtt LikesTable.Arn # Resources 를 이용하는 iam 설정 파일에서 필요
   bundle:
     linting: false # serverless-bundle plugins do not linting check

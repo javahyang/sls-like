@@ -16,7 +16,7 @@ async function createLike(event, context) {
   };
 
   await dynamodb.put({
-    TableName: 'LikesTable',
+    TableName: process.env.LIKES_TABLE_NAME,
     Item: like,
   }).promise();
 
