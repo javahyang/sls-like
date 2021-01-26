@@ -28,6 +28,13 @@ functions:
           method: POST
           path: /likes
 
+  getLikes:
+    handler: src/handlers/getLikes.handler
+    events:
+      - http:
+          method: GET
+          path: /likes
+
 custom: # 현재 서비스 전용 변수 설정
   LikesTable:
     name: !Ref LikesTable # javascript 파일에서 필요
