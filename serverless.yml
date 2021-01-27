@@ -19,6 +19,7 @@ provider: # cloud 정보
 resources:
   Resources:
     LikesTable: ${file(resources/LikesTable.yml):LikesTable}
+    BoardTable: ${file(resources/BoardTable.yml):BoardTable}
 
 functions:
   createLike:
