@@ -13,6 +13,7 @@ provider: # cloud 정보
   region: ap-northeast-2 # 서비스 배포할 리전 설정. multiple region 설정도 가능
   environment:
     LIKES_TABLE_NAME: ${self:custom.LikesTable.name}
+    BOARD_TABLE_NAME: ${self:custom.BoardTable.name}
   iamRoleStatements:
     - ${file(iam/LikesTableIAM.yml):LikesTableIAM}
     - ${file(iam/BoardTableIAM.yml):BoardTableIAM}
@@ -36,6 +37,13 @@ functions:
       - http:
           method: GET
           path: /likes
+
+  createContent:
+    handler: src/handlers/createContent.handler
+    events:
+      - http:
+          method: POST
+          path: /contents
 
 custom:
   LikesTable:
