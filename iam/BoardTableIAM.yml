@@ -1,0 +1,7 @@
+BoardTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:PutItem
+    - dynamodb:Scan
+  Resource:
+    - ${self:custom.BoardTable.arn}

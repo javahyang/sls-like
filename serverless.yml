@@ -15,6 +15,7 @@ provider: # cloud 정보
     LIKES_TABLE_NAME: ${self:custom.LikesTable.name}
   iamRoleStatements:
     - ${file(iam/LikesTableIAM.yml):LikesTableIAM}
+    - ${file(iam/BoardTableIAM.yml):BoardTableIAM}
 
 resources:
   Resources:
@@ -36,9 +37,12 @@ functions:
           method: GET
           path: /likes
 
-custom: # 현재 서비스 전용 변수 설정
+custom:
   LikesTable:
-    name: !Ref LikesTable # javascript 파일에서 필요
-    arn: !GetAtt LikesTable.Arn # Resources 를 이용하는 iam 설정 파일에서 필요
+    name: !Ref LikesTable
+    arn: !GetAtt LikesTable.Arn
+  BoardTable:
+    name: !Ref BoardTable
+    arn: !GetAtt BoardTable.Arn
   bundle:
     linting: false # serverless-bundle plugins do not linting check
