@@ -45,6 +45,13 @@ functions:
           method: POST
           path: /contents
 
+  getContents:
+    handler: src/handlers/getContents.handler
+    events:
+      - http:
+          method: GET
+          path: /contents
+          
 custom:
   LikesTable:
     name: !Ref LikesTable
