@@ -1,8 +1,5 @@
 import AWS from 'aws-sdk'
-import middy from '@middy/core'
-import httpJsonBodyParser from '@middy/http-json-body-parser'
-import httpEventNomalizer from '@middy/http-event-normalizer'
-import httpErrorHandler from '@middy/http-error-handler'
+import commonMiddleware from '../lib/commonMiddleware'
 import createError from 'http-errors'
 
 const dynamodb = new AWS.DynamoDB.DocumentClient()
@@ -11,10 +8,11 @@ export async function getContentById(id) {
   let content
 
   try {
+    // get : HASH 키를 베이스로 동작. IAM 파일에 GetItem 허용
     const result = await dynamodb
       .get({
         TableName: process.env.BOARD_TABLE_NAME,
-        Key: { id }
+        Key: { id } // ES6 : key 와 valiable 이 같은 경우
       })
       .promise()
 
@@ -32,7 +30,7 @@ export async function getContentById(id) {
 }
 
 async function getContent(event, context) {
-  const { id } = event.pathParameters
+  const { id } = event.pathParameters // object 로 key-value 값을 갖는다
   const content = await getContentById(id)
 
   return {
@@ -41,4 +39,4 @@ async function getContent(event, context) {
   }
 }
 
-export const handler = middy(getContent).use(httpJsonBodyParser()).use(httpEventNomalizer()).use(httpErrorHandler())
+export const handler = commonMiddleware(getContent)
