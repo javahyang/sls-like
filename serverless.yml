@@ -58,6 +58,13 @@ functions:
       - http:
           method: GET
           path: /contents/{id}
+
+  modifyContent:
+    handler: src/handlers/modifyContent.handler
+    events:
+      - http:
+          method: PATCH
+          path: /contents/{id}
           
 custom:
   LikesTable:
