@@ -10,13 +10,12 @@ import createError from 'http-errors'
 const dynamodb = new AWS.DynamoDB.DocumentClient()
 
 async function createLike(event, context) {
-  const { title, type } = event.body
+  const { contentId } = event.body
   const now = new Date()
 
   const like = {
     id: uuid(),
-    title,
-    type,
+    contentId,
     createdAt: now.toISOString() //ISO 타입이 데이터베이스에 날짜 넣는 기본 형식
   }
 

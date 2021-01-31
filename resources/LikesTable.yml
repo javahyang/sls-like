@@ -6,6 +6,16 @@ LikesTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
-    KeySchema:
+      - AttributeName: contentId
+        AttributeType: S
+    KeySchema: # primary key 에 대한 인덱스
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes: # 배열의 각 항목마다 인덱스
+      - IndexName: contentId
+        KeySchema:
+          - AttributeName: contentId
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL # 테이블의 모든 Attribute 반환
+            
